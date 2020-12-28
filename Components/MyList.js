@@ -37,8 +37,24 @@ export default class MyList extends React.Component {
     }
   }
 
+
+  fetchDataFromApi = ()  => {
+    const url = "http://127.0.0.1:8000/api/app/5/";
+    fetch(url)
+      .then(res => res.json())
+      .then(res => {
+        console.log(res)
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  };
+
   componentDidMount(){
     // listens for when the tab is selected as MyList
+
+    
     this.focusListener = this.props.navigation.addListener("focus", () => {      
       firebase.auth().onAuthStateChanged((user) => {
         if (!user) {
@@ -51,7 +67,10 @@ export default class MyList extends React.Component {
           this.setState({user: user, loggedOut: false})
         }
       });    
+      this.fetchDataFromApi()
     });
+
+    
   }
   
   addlist() {
